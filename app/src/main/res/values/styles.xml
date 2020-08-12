@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="TFLTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorCorporateBlue</item>
+
+        <item name="corporateBlue">@color/colorCorporateBlue</item>
+        <item name="corporateDarkGrey">@color/colorCorporateDarkGrey</item>
+        <item name="corporateBlack">@color/colorCorporateBlack</item>
+        <item name="corporateRed">@color/colorCorporateRed</item>
+        <item name="corporateYellow">@color/colorCorporateYellow</item>
+        <item name="corporateWhite">@color/colorCorporateWhite</item>
+        <item name="corporateGrey">@color/colorCorporateGrey</item>
+        <item name="corporateGreen">@color/colorCorporateGreen</item>
+
+        <item name="android:textColor">@color/colorCorporateWhite</item>
+
+        <item name="windowNoTitle">true</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+</resources>

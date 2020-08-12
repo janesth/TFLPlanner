@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">P.T. London</string>
+    <string name="app_name_long">Public Transport London</string>
+
+    <!-- pt = public transport -->
+    <string name="pt_tube">Tube</string>
+    <string name="pt_dlr">DLR</string>
+
+    <string name="placeholder">Placeholder</string>
+
+    <string name="error_loading">An error has occured.</string>
+    <string name="error_empty">An error has occured.\nNo data was returned.</string>
+</resources>

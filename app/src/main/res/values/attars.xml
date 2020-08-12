@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="corporateBlue" format="reference"></attr>
+    <attr name="corporateDarkGrey" format="reference"></attr>
+    <attr name="corporateBlack" format="reference"></attr>
+    <attr name="corporateRed" format="reference"></attr>
+    <attr name="corporateYellow" format="reference"></attr>
+    <attr name="corporateWhite" format="reference"></attr>
+    <attr name="corporateGrey" format="reference"></attr>
+    <attr name="corporateGreen" format="reference"></attr>
+
+</resources>

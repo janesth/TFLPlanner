@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorCorporateBlue">#2905a1</color>
+    <color name="colorCorporateDarkGrey">#333F48</color>
+    <color name="colorCorporateBlack">#2D2926</color>
+    <color name="colorCorporateRed">#DA291C</color>
+    <color name="colorCorporateYellow">#FFCD00</color>
+    <color name="colorCorporateWhite">#ffffff</color>
+    <color name="colorCorporateGrey">#7C878E</color>
+    <color name="colorCorporateGreen">#007A33</color>
+
+</resources>
