@@ -18,9 +18,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class OverviewActivity extends AppCompatActivity {
 
-    private final static String APP_ID = "";
-    private final static String APP_KEY = "";
-
     private Button button_tube;
     private Button button_dlr;
 
@@ -36,7 +33,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     public void getTubes(View view) {
         RequestParams rp = new RequestParams();
-        HttpUtils.get("Line/Mode/tube?app_id=" + APP_ID + "&app_key=" + APP_KEY, rp, new JsonHttpResponseHandler() {
+        HttpUtils.get("Line/Mode/tube?app_id=" + BuildConfig.APIID + "&app_key=" + BuildConfig.APIKEY, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.i(OverviewActivity.class.getName(), "Response was JSONObject");

@@ -3,7 +3,6 @@ package ch.janesthomas.tflplanner;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,15 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.janesthomas.tflplanner.adapters.StopAdapter;
 import ch.janesthomas.tflplanner.adapters.TubeAdapter;
@@ -76,56 +72,31 @@ public class TubeActivity extends AppCompatActivity {
     }
 
     private void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        final boolean isLoading = false;
         System.out.println(i);
 
         final String tubeId = tubeModels.get(i).getId();
+        final Gson gson = new Gson();
 
         RequestParams rp = new RequestParams();
         Log.d("LinienURL", "https://api.tfl.gov.uk/line/" + tubeId + "/stoppoints?app_id=f729fc8a&app_key=b0df6b0af0ba1fddc75cf8d8bb6b73e1");
 
         HttpUtils.get("line/" + tubeId + "/stoppoints?app_id=f729fc8a&app_key=b0df6b0af0ba1fddc75cf8d8bb6b73e1", rp, new JsonHttpResponseHandler() {
-            /*@Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.i(TubeAdapter.class.getName(), "STOPPOINT");
-            }*/
+            boolean isLoading = false;
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
                 isLoading=false;
-                Log.i(TubeAdapter.class.getName(), "STOPPOINT1");
+                Log.i(TubeAdapter.class.getName(), "Request was successful.");
 
                 Intent intent = new Intent(TubeActivity.this, StopActivity.class);
-                intent.putExtra("stoppoints", timeline.toString());
+                ArrayList<StopModel> temp = setStopList(timeline.toString());
+                intent.putExtra("stoppoints", gson.toJson(temp));
                 startActivity(intent);
-                /*
-                list_tubes.setVisibility(View.GONE);
-                list_stops.setVisibility(View.VISIBLE);
-
-                stopModels = setStopList(timeline);
-
-                if (stopModels != null) {
-                    if (!stopModels.isEmpty()) {
-                        stopAdapter = new StopAdapter(stopModels, getApplicationContext());
-
-                        list_stops.setAdapter(stopAdapter);
-                        list_stops.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                Log.d(StopActivity.class.getName(), "no work");
-                            }
-                        });
-                    }
-                } else {
-                    list_tubes.setBackgroundColor(getResources().getColor(R.color.colorCorporateBlue));
-                    text_warning.setText(R.string.error_loading);
-                }
-                */
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.i(TubeActivity.class.getName(), "STOPPOINT101");
+                Log.i(TubeActivity.class.getName(), "Request failed. Here is why:");
                 Log.i(TubeActivity.class.getName(), Integer.toString(statusCode));
                 Log.i(TubeActivity.class.getName(), responseString);
 
@@ -137,42 +108,31 @@ public class TubeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-                if(isLoading == false) {
-                    ProgressDialog dialog = ProgressDialog.show(TubeActivity.this, "",
-                            "Loading. Please wait...", true);
-                    isLoading = true;
-                }
-            }
-
-            @Override
             public void onCancel() {
                 Log.e(TubeActivity.class.getName(), "CANCELLED");
             }
-
-            /*
-            public void onRetry(int retryNo) {
-        AsyncHttpClient.log.d(LOG_TAG, String.format("Request retry no. %d", retryNo));
-    }
-
-    public void onCancel() {
-        AsyncHttpClient.log.d(LOG_TAG, "Request got cancelled");
-    }
-             */
         });
         Log.e("ONCLICK", Integer.toString(view.getId()));
     }
-/*
-    private ArrayList<StopModel> setStopList(JSONArray stoppoints) {
+
+    private ArrayList<StopModel> setStopList(String jsonArray) {
 
         ArrayList<StopModel> content = new ArrayList<>();
+        JSONArray stopArray = null;
 
-        for (int counter = 0; counter < stoppoints.length(); counter++) {
+        try {
+            stopArray = new JSONArray(jsonArray);
+            Log.i(StopActivity.class.getName(), stopArray.toString(2));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (int counter = 0; counter < stopArray.length(); counter++) {
             try {
-                final String id = stoppoints.getJSONObject(counter).getString("id");
-                final String commonName = stoppoints.getJSONObject(counter).getString("commonName");
-                final double lat = stoppoints.getJSONObject(counter).getDouble("lat");
-                final double lon = stoppoints.getJSONObject(counter).getDouble("lon");
+                final String id = stopArray.getJSONObject(counter).getString("id");
+                final String commonName = stopArray.getJSONObject(counter).getString("commonName");
+                final double lat = stopArray.getJSONObject(counter).getDouble("lat");
+                final double lon = stopArray.getJSONObject(counter).getDouble("lon");
 
                 StopModel model = new StopModel(id, commonName, lat, lon);
 
@@ -185,7 +145,7 @@ public class TubeActivity extends AppCompatActivity {
 
         return content;
     }
-    */
+
 
 
     private ArrayList<TubeModel> setTubeList() {

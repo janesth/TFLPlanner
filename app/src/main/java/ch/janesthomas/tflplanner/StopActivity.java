@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -21,6 +23,7 @@ public class StopActivity extends AppCompatActivity {
 
     ListView list_stops;
     TextView text_warning;
+    Gson gson = new Gson();
 
     ArrayList<StopModel> stopModels;
     private static StopAdapter stopAdapter;
@@ -35,7 +38,7 @@ public class StopActivity extends AppCompatActivity {
         text_warning.setText("");
         list_stops.setBackgroundColor(getResources().getColor(R.color.colorCorporateWhite));
 
-        stopModels = setStopList();
+        stopModels = gson.fromJson(getIntent().getStringExtra("stoppoints"), ArrayList.class);
 
         if(stopModels != null) {
             if (!stopModels.isEmpty()) {
