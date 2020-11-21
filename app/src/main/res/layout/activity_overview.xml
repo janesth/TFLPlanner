@@ -32,6 +32,7 @@
             android:layout_marginLeft="5px"
             android:layout_weight="1"
             android:background="@color/colorCorporateWhite"
+            android:onClick="getDLR"
             android:text="@string/pt_dlr"
             android:textColor="@color/colorCorporateBlue" />
     </LinearLayout>
