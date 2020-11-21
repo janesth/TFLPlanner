@@ -8,6 +8,7 @@
 
     <string name="placeholder">Placeholder</string>
 
+    <string name="error_generic_title">Something went wrong...</string>
     <string name="error_loading">An error has occured.</string>
     <string name="error_empty">An error has occured.\nNo data was returned.</string>
 </resources>

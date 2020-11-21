@@ -1,5 +1,6 @@
 package ch.janesthomas.tflplanner;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ public class OverviewActivity extends AppCompatActivity {
 
     private Button button_tube;
     private Button button_dlr;
+    AlertDialog.Builder builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class OverviewActivity extends AppCompatActivity {
 
         button_tube = (Button) findViewById(R.id.button_tube);
         button_dlr = (Button) findViewById(R.id.button_dlr);
+        builder = new AlertDialog.Builder(this);
+        setUpDialog();
 
     }
 
@@ -46,6 +51,22 @@ public class OverviewActivity extends AppCompatActivity {
                 intent.putExtra("tubes", timeline.toString());
                 startActivity(intent);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.i(OverviewActivity.class.getName(), "Request failed. Here is why:");
+                Log.i(OverviewActivity.class.getName(), Integer.toString(statusCode));
+                Log.i(OverviewActivity.class.getName(), responseString);
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
         });
+    }
+
+    private void setUpDialog() {
+        builder.setMessage(R.string.error_loading);
+        builder.setTitle(R.string.error_generic_title);
+        builder.setCancelable(true);
     }
 }
