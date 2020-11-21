@@ -7,21 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.ArrayList;
 
 import ch.janesthomas.tflplanner.R;
 import ch.janesthomas.tflplanner.models.StopModel;
 
-public class StopAdapter extends ArrayAdapter<StopModel> implements View.OnClickListener{
-
-    private ArrayList<StopModel> stopList;
-    Context context;
+public class StopAdapter extends ArrayAdapter<LinkedTreeMap> implements View.OnClickListener{
 
     private static class ViewHolder {
         TextView txtName;
     }
 
-    public StopAdapter(ArrayList<StopModel> stops, Context context) {
+    public StopAdapter(ArrayList<LinkedTreeMap> stops, Context context) {
         super(context, R.layout.row_item, stops);
 
     }
@@ -29,15 +28,18 @@ public class StopAdapter extends ArrayAdapter<StopModel> implements View.OnClick
     @Override
     public void onClick(View view) {
         int position = (Integer) view.getTag();
-        Object object = getItem(position);
-        StopModel stopModel = (StopModel) object;
-
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        StopModel stopModel = getItem(position);
+        final String ID = (String) getItem(position).get("id");
+        final String COMMONNAME = (String) getItem(position).get("commonName");
+        final double LAT = (double) getItem(position).get("lat");
+        final double LON = (double) getItem(position).get("lon");
+
+
+        StopModel stopModel = new StopModel( ID, COMMONNAME , LAT , LON);
         // Check if an existing view is being reused, otherwise inflate the view
         StopAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
 

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,7 @@ public class StopActivity extends AppCompatActivity {
     TextView text_warning;
     Gson gson = new Gson();
 
-    ArrayList<StopModel> stopModels;
+    ArrayList<LinkedTreeMap> stopModels;
     private static StopAdapter stopAdapter;
 
     @Override
