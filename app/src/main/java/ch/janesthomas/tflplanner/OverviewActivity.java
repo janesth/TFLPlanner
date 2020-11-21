@@ -64,6 +64,34 @@ public class OverviewActivity extends AppCompatActivity {
         });
     }
 
+    public void getDLR(View view) {
+        RequestParams rp = new RequestParams();
+        HttpUtils.get("Line/Mode/dlr?app_id=" + BuildConfig.APIID + "&app_key=" + BuildConfig.APIKEY, rp, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.i(OverviewActivity.class.getName(), "Response was JSONObject");
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                Log.i(OverviewActivity.class.getName(), "Response was JSONArray");
+
+                Intent intent = new Intent(getBaseContext(), DLRActivity.class);
+                intent.putExtra("dlr", timeline.toString());
+                startActivity(intent);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.i(OverviewActivity.class.getName(), "Request failed. Here is why:");
+                Log.i(OverviewActivity.class.getName(), Integer.toString(statusCode));
+                Log.i(OverviewActivity.class.getName(), responseString);
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+        });
+    }
+
     private void setUpDialog() {
         builder.setMessage(R.string.error_loading);
         builder.setTitle(R.string.error_generic_title);
