@@ -66,7 +66,6 @@ public class DLRActivity extends AppCompatActivity {
             list_dlr.setBackgroundColor(getResources().getColor(R.color.colorCorporateBlue));
             text_warning.setText(R.string.error_loading);
         }
-
     }
 
     private void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

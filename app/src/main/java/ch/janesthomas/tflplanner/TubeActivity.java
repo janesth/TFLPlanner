@@ -1,6 +1,5 @@
 package ch.janesthomas.tflplanner;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
 
-import ch.janesthomas.tflplanner.adapters.StopAdapter;
 import ch.janesthomas.tflplanner.adapters.TubeAdapter;
 import ch.janesthomas.tflplanner.models.StopModel;
 import ch.janesthomas.tflplanner.models.TubeModel;
@@ -31,9 +29,7 @@ public class TubeActivity extends AppCompatActivity {
     TextView text_warning;
 
     ArrayList<TubeModel> tubeModels;
-    ArrayList<StopModel> stopModels;
     private static TubeAdapter tubeAdapter;
-    private static StopAdapter stopAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +64,6 @@ public class TubeActivity extends AppCompatActivity {
             list_tubes.setBackgroundColor(getResources().getColor(R.color.colorCorporateBlue));
             text_warning.setText(R.string.error_loading);
         }
-
     }
 
     private void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -78,9 +73,9 @@ public class TubeActivity extends AppCompatActivity {
         final Gson gson = new Gson();
 
         RequestParams rp = new RequestParams();
-        Log.d("LinienURL", "https://api.tfl.gov.uk/line/" + tubeId + "/stoppoints?app_id=f729fc8a&app_key=b0df6b0af0ba1fddc75cf8d8bb6b73e1");
+        Log.d("LinienURL", "https://api.tfl.gov.uk/line/" + tubeId + "/stoppoints?app_id=" + BuildConfig.APIID + "&app_key=" + BuildConfig.APIKEY);
 
-        HttpUtils.get("line/" + tubeId + "/stoppoints?app_id=f729fc8a&app_key=b0df6b0af0ba1fddc75cf8d8bb6b73e1", rp, new JsonHttpResponseHandler() {
+        HttpUtils.get("line/" + tubeId + "/stoppoints?app_id=" + BuildConfig.APIID + "&app_key=" + BuildConfig.APIKEY, rp, new JsonHttpResponseHandler() {
             boolean isLoading = false;
 
             @Override
@@ -142,11 +137,8 @@ public class TubeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         return content;
     }
-
-
 
     private ArrayList<TubeModel> setTubeList() {
 
@@ -176,7 +168,6 @@ public class TubeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         return content;
     }
 }

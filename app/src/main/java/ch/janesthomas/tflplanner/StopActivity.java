@@ -56,40 +56,4 @@ public class StopActivity extends AppCompatActivity {
             }
         }
     }
-
-    private ArrayList<StopModel> setStopList() {
-
-        ArrayList<StopModel> content = new ArrayList<>();
-
-        Intent intent = getIntent();
-        String jsonArray = intent.getStringExtra("stoppoints");
-        intent.removeExtra("stoppoints");
-        JSONArray stopArray = null;
-
-        try {
-            stopArray = new JSONArray(jsonArray);
-            Log.i(StopActivity.class.getName(), stopArray.toString(2));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        for (int counter = 0; counter < stopArray.length(); counter++) {
-            try {
-                final String id = stopArray.getJSONObject(counter).getString("id");
-                final String commonName = stopArray.getJSONObject(counter).getString("commonName");
-                final double lat = stopArray.getJSONObject(counter).getDouble("lat");
-                final double lon = stopArray.getJSONObject(counter).getDouble("lon");
-
-                StopModel model = new StopModel(id, commonName, lat, lon);
-
-                content.add(model);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return content;
-    }
-
 }

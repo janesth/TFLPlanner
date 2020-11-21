@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import ch.janesthomas.tflplanner.R;
 import ch.janesthomas.tflplanner.models.StopModel;
 
-public class StopAdapter extends ArrayAdapter<LinkedTreeMap> implements View.OnClickListener{
+public class StopAdapter extends ArrayAdapter<LinkedTreeMap>{
 
     private static class ViewHolder {
         TextView txtName;
@@ -22,17 +22,10 @@ public class StopAdapter extends ArrayAdapter<LinkedTreeMap> implements View.OnC
 
     public StopAdapter(ArrayList<LinkedTreeMap> stops, Context context) {
         super(context, R.layout.row_item, stops);
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        int position = (Integer) view.getTag();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
         final String ID = (String) getItem(position).get("id");
         final String COMMONNAME = (String) getItem(position).get("commonName");
         final double LAT = (double) getItem(position).get("lat");
@@ -40,25 +33,18 @@ public class StopAdapter extends ArrayAdapter<LinkedTreeMap> implements View.OnC
 
 
         StopModel stopModel = new StopModel( ID, COMMONNAME , LAT , LON);
-        // Check if an existing view is being reused, otherwise inflate the view
-        StopAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
+        StopAdapter.ViewHolder viewHolder;
 
         if (convertView == null) {
-
             viewHolder = new StopAdapter.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item, parent, false);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.element_name);
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (StopAdapter.ViewHolder) convertView.getTag();
         }
-
         viewHolder.txtName.setText(stopModel.getCommonName());
-
-        // Return the completed view to render on screen
         return convertView;
     }
-
 }
